@@ -1,0 +1,7 @@
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.5
+  matcher: ^0.12.19
+  meta: ^1.18.1
+  test_api: ^0.7.10
