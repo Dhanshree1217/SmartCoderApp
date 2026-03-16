@@ -12,16 +12,55 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  final topics = [
-    {"name": "Variables", "icon": Icons.storage},
-    {"name": "Data Types", "icon": Icons.category},
-    {"name": "Loops", "icon": Icons.loop},
-    {"name": "Arrays", "icon": Icons.view_list},
-    {"name": "Functions", "icon": Icons.functions},
-  ];
+  List<Map<String, dynamic>> getTopicsForLanguage(String language) {
+    switch (language) {
+      case 'Python':
+        return [
+          {"name": "Variables", "icon": Icons.storage},
+          {"name": "Data Types", "icon": Icons.category},
+          {"name": "Loops", "icon": Icons.loop},
+          {"name": "Lists", "icon": Icons.view_list},
+          {"name": "Functions", "icon": Icons.functions},
+        ];
+      case 'Java':
+        return [
+          {"name": "Classes", "icon": Icons.class_outlined},
+          {"name": "Objects", "icon": Icons.widgets},
+          {"name": "Inheritance", "icon": Icons.account_tree},
+          {"name": "Methods", "icon": Icons.functions},
+          {"name": "Arrays", "icon": Icons.view_list},
+        ];
+      case 'C':
+        return [
+          {"name": "Pointers", "icon": Icons.arrow_forward},
+          {"name": "Memory", "icon": Icons.memory},
+          {"name": "Structures", "icon": Icons.account_box},
+          {"name": "File I/O", "icon": Icons.folder},
+          {"name": "Functions", "icon": Icons.functions},
+        ];
+      case 'HTML':
+        return [
+          {"name": "Tags", "icon": Icons.code},
+          {"name": "CSS Styling", "icon": Icons.palette},
+          {"name": "Forms", "icon": Icons.assignment},
+          {"name": "Layout", "icon": Icons.dashboard},
+          {"name": "Responsive", "icon": Icons.phone_android},
+        ];
+      default:
+        return [
+          {"name": "Variables", "icon": Icons.storage},
+          {"name": "Data Types", "icon": Icons.category},
+          {"name": "Loops", "icon": Icons.loop},
+          {"name": "Arrays", "icon": Icons.view_list},
+          {"name": "Functions", "icon": Icons.functions},
+        ];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final languageTopics = getTopicsForLanguage(widget.language);
+    
     return Scaffold(
       appBar: AppBar(
         title: Text("Quiz Time!"),
@@ -44,7 +83,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   Icon(Icons.emoji_events, size: 60, color: Colors.amber),
                   SizedBox(height: 10),
                   Text(
-                    "Select a Topic to Quiz",
+                    "Select a ${widget.language} Topic to Quiz",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -62,7 +101,7 @@ class _QuizScreenState extends State<QuizScreen> {
             Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.all(16),
-                itemCount: topics.length,
+                itemCount: languageTopics.length,
                 itemBuilder: (context, index) {
                   return Card(
                     margin: EdgeInsets.only(bottom: 12),
@@ -79,13 +118,13 @@ class _QuizScreenState extends State<QuizScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Icon(
-                          topics[index]["icon"] as IconData,
+                          languageTopics[index]["icon"] as IconData,
                           color: Color(0xFFFF9800),
                           size: 30,
                         ),
                       ),
                       title: Text(
-                        topics[index]["name"] as String,
+                        languageTopics[index]["name"] as String,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -97,7 +136,9 @@ class _QuizScreenState extends State<QuizScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => QuizQuestionsScreen(
-                              topic: topics[index]["name"] as String,
+                              topic: languageTopics[index]["name"] as String,
+                              language: widget.language,
+                              level: widget.level,
                             ),
                           ),
                         );
@@ -116,8 +157,10 @@ class _QuizScreenState extends State<QuizScreen> {
 
 class QuizQuestionsScreen extends StatefulWidget {
   final String topic;
+  final String language;
+  final String level;
 
-  QuizQuestionsScreen({required this.topic});
+  QuizQuestionsScreen({required this.topic, required this.language, required this.level});
 
   @override
   _QuizQuestionsScreenState createState() => _QuizQuestionsScreenState();
@@ -130,101 +173,115 @@ class _QuizQuestionsScreenState extends State<QuizQuestionsScreen> {
   bool showFeedback = false;
   bool isCorrect = false;
 
-  final Map<String, List<Map<String, dynamic>>> quizData = {
-    "Variables": [
-      {
-        "question": "What is a variable in Python?",
-        "options": [
-          "A box to store values",
-          "A game",
-          "A movie",
-          "A car"
-        ],
-        "correct": 0
+  Map<String, Map<String, Map<String, List<Map<String, dynamic>>>>> getQuizData() {
+    return {
+      'Python': {
+        'Beginner': {
+          "Variables": [
+            {"question": "How do you create a variable in Python?", "options": ["x = 5", "var x = 5", "int x = 5", "let x = 5"], "correct": 0},
+            {"question": "Which is a valid variable name?", "options": ["my_name", "123name", "my-name", "my name"], "correct": 0},
+          ],
+          "Data Types": [
+            {"question": "What type is 'Hello'?", "options": ["String", "Number", "Boolean", "Array"], "correct": 0},
+            {"question": "What type is 25?", "options": ["Integer", "String", "Boolean", "List"], "correct": 0},
+          ],
+          "Loops": [
+            {"question": "What does a loop do?", "options": ["Repeats code", "Stops code", "Deletes code", "Saves code"], "correct": 0},
+            {"question": "Which loop runs a fixed number of times?", "options": ["for loop", "if statement", "function", "variable"], "correct": 0},
+          ],
+          "Lists": [
+            {"question": "What is a list in Python?", "options": ["Collection of items", "A single number", "A function", "A loop"], "correct": 0},
+            {"question": "How do we access first item in list?", "options": ["list[0]", "list[1]", "list.first", "list(0)"], "correct": 0},
+          ],
+          "Functions": [
+            {"question": "How do we define a function in Python?", "options": ["def function_name():", "function name()", "func name", "define name"], "correct": 0},
+            {"question": "What is a function?", "options": ["Reusable block of code", "A variable", "A loop", "An array"], "correct": 0},
+          ],
+        }
       },
-      {
-        "question": "Which is a valid variable name?",
-        "options": ["my_name", "123name", "my-name", "my name"],
-        "correct": 0
+      'Java': {
+        'Beginner': {
+          "Classes": [
+            {"question": "What is a class in Java?", "options": ["Blueprint for objects", "A variable", "A loop", "A function"], "correct": 0},
+            {"question": "How do you create a class?", "options": ["class MyClass {}", "Class MyClass {}", "new MyClass", "object MyClass"], "correct": 0},
+          ],
+          "Objects": [
+            {"question": "What is an object?", "options": ["Instance of a class", "A variable", "A method", "A loop"], "correct": 0},
+            {"question": "How do you create an object?", "options": ["new ClassName()", "create ClassName()", "make ClassName()", "build ClassName()"], "correct": 0},
+          ],
+          "Inheritance": [
+            {"question": "What keyword is used for inheritance?", "options": ["extends", "implements", "inherits", "super"], "correct": 0},
+            {"question": "What is inheritance?", "options": ["Class acquiring properties of another", "A loop", "A variable", "A method"], "correct": 0},
+          ],
+          "Methods": [
+            {"question": "What is a method in Java?", "options": ["Function inside a class", "A variable", "A loop", "An object"], "correct": 0},
+            {"question": "How do you call a method?", "options": ["object.methodName()", "call methodName()", "run methodName()", "execute methodName()"], "correct": 0},
+          ],
+          "Arrays": [
+            {"question": "How do you declare an array in Java?", "options": ["int[] arr = new int[5]", "array int arr[5]", "int arr[] = [5]", "new array int[5]"], "correct": 0},
+            {"question": "What is an array?", "options": ["Collection of same type elements", "A single variable", "A method", "A class"], "correct": 0},
+          ],
+        }
       },
-      {
-        "question": "Can variable names start with numbers?",
-        "options": ["No", "Yes", "Sometimes", "Maybe"],
-        "correct": 0
+      'C': {
+        'Beginner': {
+          "Pointers": [
+            {"question": "What is a pointer?", "options": ["Variable storing memory address", "A function", "A loop", "An array"], "correct": 0},
+            {"question": "How do you declare a pointer?", "options": ["int *ptr", "pointer int ptr", "int ptr*", "*int ptr"], "correct": 0},
+          ],
+          "Memory": [
+            {"question": "What does malloc() do?", "options": ["Allocates memory", "Frees memory", "Prints output", "Reads input"], "correct": 0},
+            {"question": "What does free() do?", "options": ["Releases memory", "Allocates memory", "Prints output", "Reads input"], "correct": 0},
+          ],
+          "Structures": [
+            {"question": "What is a struct?", "options": ["User-defined data type", "A loop", "A function", "A pointer"], "correct": 0},
+            {"question": "How do you declare a struct?", "options": ["struct Name { };", "structure Name { };", "class Name { };", "type Name { };"], "correct": 0},
+          ],
+          "File I/O": [
+            {"question": "How do you open a file in C?", "options": ["fopen()", "open()", "file_open()", "read_file()"], "correct": 0},
+            {"question": "How do you close a file?", "options": ["fclose()", "close()", "file_close()", "end_file()"], "correct": 0},
+          ],
+          "Functions": [
+            {"question": "How do you define a function in C?", "options": ["int functionName() { }", "function int functionName()", "def functionName()", "func int functionName()"], "correct": 0},
+            {"question": "What is a function?", "options": ["Block of reusable code", "A variable", "A loop", "A struct"], "correct": 0},
+          ],
+        }
       },
-    ],
-    "Data Types": [
-      {
-        "question": "What type is 'Hello'?",
-        "options": ["Text/String", "Number", "Boolean", "Array"],
-        "correct": 0
-      },
-      {
-        "question": "What type is 25?",
-        "options": ["Number", "Text", "Boolean", "None"],
-        "correct": 0
-      },
-      {
-        "question": "What type is True/False?",
-        "options": ["Boolean", "String", "Number", "List"],
-        "correct": 0
-      },
-    ],
-    "Loops": [
-      {
-        "question": "What does a loop do?",
-        "options": [
-          "Repeats code",
-          "Stops code",
-          "Deletes code",
-          "Saves code"
-        ],
-        "correct": 0
-      },
-      {
-        "question": "Which loop runs a fixed number of times?",
-        "options": ["for loop", "if statement", "function", "variable"],
-        "correct": 0
-      },
-    ],
-    "Arrays": [
-      {
-        "question": "What is an array?",
-        "options": [
-          "A list of items",
-          "A single number",
-          "A function",
-          "A loop"
-        ],
-        "correct": 0
-      },
-      {
-        "question": "How do we access first item in array?",
-        "options": ["array[0]", "array[1]", "array.first", "array(0)"],
-        "correct": 0
-      },
-    ],
-    "Functions": [
-      {
-        "question": "What is a function?",
-        "options": [
-          "A reusable block of code",
-          "A variable",
-          "A loop",
-          "An array"
-        ],
-        "correct": 0
-      },
-      {
-        "question": "How do we define a function in Python?",
-        "options": ["def function_name():", "function name()", "func name", "define name"],
-        "correct": 0
-      },
-    ],
-  };
+      'HTML': {
+        'Beginner': {
+          "Tags": [
+            {"question": "What does HTML stand for?", "options": ["HyperText Markup Language", "High Tech Modern Language", "Home Tool Markup Language", "Hyper Transfer Protocol"], "correct": 0},
+            {"question": "Which tag creates a heading?", "options": ["<h1>", "<head>", "<header>", "<title>"], "correct": 0},
+          ],
+          "CSS Styling": [
+            {"question": "What does CSS stand for?", "options": ["Cascading Style Sheets", "Computer Style Sheets", "Creative Style Sheets", "Colorful Style Sheets"], "correct": 0},
+            {"question": "How do you change text color?", "options": ["color: red;", "text-color: red;", "font-color: red;", "style: red;"], "correct": 0},
+          ],
+          "Forms": [
+            {"question": "Which tag creates a form?", "options": ["<form>", "<input>", "<button>", "<field>"], "correct": 0},
+            {"question": "Which input type creates a text box?", "options": ["text", "textbox", "string", "input"], "correct": 0},
+          ],
+          "Layout": [
+            {"question": "Which tag is used for divisions?", "options": ["<div>", "<section>", "<part>", "<block>"], "correct": 0},
+            {"question": "Which tag creates a paragraph?", "options": ["<p>", "<para>", "<text>", "<paragraph>"], "correct": 0},
+          ],
+          "Responsive": [
+            {"question": "What makes a website responsive?", "options": ["Media queries", "JavaScript", "Images", "Videos"], "correct": 0},
+            {"question": "Which CSS property controls layout?", "options": ["display", "color", "font-size", "text-align"], "correct": 0},
+          ],
+        }
+      }
+    };
+  }
 
   void checkAnswer() {
-    final questions = quizData[widget.topic] ?? [];
+    final allQuizData = getQuizData();
+    final languageData = allQuizData[widget.language] ?? {};
+    final levelData = languageData[widget.level.split(' ')[0]] ?? {};
+    final questions = levelData[widget.topic] ?? [];
+    
+    if (questions.isEmpty) return;
+    
     final question = questions[currentQuestion];
     
     setState(() {
@@ -249,12 +306,13 @@ class _QuizQuestionsScreenState extends State<QuizQuestionsScreen> {
   }
 
   Future<void> finishQuiz() async {
-    final questions = quizData[widget.topic] ?? [];
+    final allQuizData = getQuizData();
+    final languageData = allQuizData[widget.language] ?? {};
+    final levelData = languageData[widget.level.split(' ')[0]] ?? {};
+    final questions = levelData[widget.topic] ?? [];
     
-    // Save quiz score and add points
     await UserDataManager.saveQuizScore(widget.topic, score, questions.length);
     
-    // Mark topic as completed if score is good
     if (score >= questions.length * 0.6) {
       await UserDataManager.markTopicCompleted(widget.topic);
     }
@@ -274,12 +332,15 @@ class _QuizQuestionsScreenState extends State<QuizQuestionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final questions = quizData[widget.topic] ?? [];
+    final allQuizData = getQuizData();
+    final languageData = allQuizData[widget.language] ?? {};
+    final levelData = languageData[widget.level.split(' ')[0]] ?? {};
+    final questions = levelData[widget.topic] ?? [];
 
     if (questions.isEmpty) {
       return Scaffold(
         appBar: AppBar(title: Text("Quiz")),
-        body: Center(child: Text("No questions available")),
+        body: Center(child: Text("No questions available for ${widget.language} ${widget.topic}")),
       );
     }
 

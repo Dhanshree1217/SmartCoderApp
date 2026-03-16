@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'language_selection_screen.dart';
+import '../user_data_manager.dart';
+import 'home_screen.dart';
 import 'login_screen.dart';
+import '../main.dart';
+import '../auth_database.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -20,54 +23,86 @@ class _SignUpScreenState extends State<SignUpScreen> {
         emailController.text.isEmpty ||
         passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill all fields')),
+        SnackBar(
+          content: Text('Please fill all fields'),
+          backgroundColor: Colors.red,
+        ),
       );
       return;
     }
 
     if (passwordController.text != confirmPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Passwords do not match')),
+        SnackBar(
+          content: Text('Passwords do not match'),
+          backgroundColor: Colors.red,
+        ),
       );
       return;
     }
 
     setState(() => isLoading = true);
-
-    // Save user data
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userName', nameController.text);
-    await prefs.setString('userEmail', emailController.text);
-    await prefs.setString('email', emailController.text);
-    await prefs.setString('password', passwordController.text);
-    await prefs.setBool('isLoggedIn', true);
-
     await Future.delayed(Duration(seconds: 1));
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LanguageSelectionScreen(),
-      ),
+    // Register user in database
+    bool success = await AuthDatabase.registerUser(
+      name: nameController.text.trim(),
+      email: emailController.text.trim(),
+      password: passwordController.text,
+      method: 'email',
     );
+    
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('✅ Account created! Please login with your credentials.'),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      await Future.delayed(Duration(seconds: 2));
+      Navigator.pushReplacement(
+        context,
+        SmoothPageRoute(page: LoginScreen()),
+      );
+    } else {
+      // Registration failed (email already exists or invalid email)
+      setState(() => isLoading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('❌ Email already exists or invalid email format! Please try with different email.'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
   }
 
   Future<void> signUpWithGoogle() async {
     setState(() => isLoading = true);
-    await Future.delayed(Duration(seconds: 1));
-
-    // Show Google account selection
+    
+    // Show Google account selection for signup
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Row(
           children: [
-            Text(
-              "G",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
                 color: Color(0xFF4285F4),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Center(
+                child: Text(
+                  "G",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
             SizedBox(width: 10),
@@ -96,10 +131,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             SizedBox(height: 10),
             TextButton.icon(
-              icon: Icon(Icons.add),
-              label: Text('Use another account'),
+              icon: Icon(Icons.add, color: Color(0xFF4285F4)),
+              label: Text('Use another account', style: TextStyle(color: Color(0xFF4285F4))),
               onPressed: () {
                 Navigator.pop(context);
+                _showAddNewGoogleAccount();
               },
             ),
           ],
@@ -108,6 +144,93 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
 
     setState(() => isLoading = false);
+  }
+  
+  void _showAddNewGoogleAccount() {
+    final newEmailController = TextEditingController();
+    final newNameController = TextEditingController();
+    
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Add Google Account'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: newNameController,
+              decoration: InputDecoration(
+                labelText: 'Full Name',
+                prefixIcon: Icon(Icons.person),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+              ),
+            ),
+            SizedBox(height: 16),
+            TextField(
+              controller: newEmailController,
+              decoration: InputDecoration(
+                labelText: 'Gmail Address',
+                prefixIcon: Icon(Icons.email),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              if (newEmailController.text.isNotEmpty && newNameController.text.isNotEmpty) {
+                // Register new Google user in database
+                bool success = await AuthDatabase.registerUser(
+                  name: newNameController.text.trim(),
+                  email: newEmailController.text.trim(),
+                  password: 'google_auth_${DateTime.now().millisecondsSinceEpoch}',
+                  method: 'google',
+                );
+                
+                if (success) {
+                  await UserDataManager.saveUserProfile(
+                    name: newNameController.text,
+                    email: newEmailController.text,
+                  );
+                  
+                  Navigator.pop(context);
+                  
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('✅ Google account created successfully!'),
+                      backgroundColor: Colors.green,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                  
+                  await Future.delayed(Duration(seconds: 1));
+                  
+                  Navigator.pushReplacement(
+                    context,
+                    SmoothPageRoute(page: HomeScreen(userName: newNameController.text)),
+                  );
+                } else {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('❌ Email already exists or invalid email format!'),
+                      backgroundColor: Colors.red,
+                      duration: Duration(seconds: 3),
+                    ),
+                  );
+                }
+              }
+            },
+            child: Text('Create Account'),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildGoogleAccount(String name, String email, Color color) {
@@ -122,18 +245,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
       title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(email, style: TextStyle(fontSize: 12)),
       onTap: () async {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('userName', name);
-        await prefs.setString('userEmail', email);
-        await prefs.setBool('isLoggedIn', true);
-
-        Navigator.pop(context);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LanguageSelectionScreen(),
-          ),
+        // Register Google user in database
+        bool success = await AuthDatabase.registerUser(
+          name: name,
+          email: email,
+          password: 'google_auth_${DateTime.now().millisecondsSinceEpoch}', // Auto-generated password for Google users
+          method: 'google',
         );
+        
+        if (success) {
+          await UserDataManager.saveUserProfile(
+            name: name,
+            email: email,
+          );
+
+          Navigator.pop(context);
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('✅ Google account created successfully!'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 2),
+            ),
+          );
+          
+          await Future.delayed(Duration(seconds: 1));
+          
+          Navigator.pushReplacement(
+            context,
+            SmoothPageRoute(page: HomeScreen(userName: name)),
+          );
+        } else {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('❌ This Google account already exists! Please try login instead.'),
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
       },
     );
   }
@@ -296,9 +447,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               onPressed: () {
                                 Navigator.pushReplacement(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
-                                  ),
+                                  SmoothPageRoute(page: LoginScreen()),
                                 );
                               },
                               child: Text(

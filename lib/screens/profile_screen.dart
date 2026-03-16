@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../user_data_manager.dart';
+import 'splash_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -17,6 +18,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int userLevel = 1;
   int streak = 0;
   int completedTopics = 0;
+  int userRank = 0;
+  Map<String, double> languageProgress = {};
 
   final ImagePicker _picker = ImagePicker();
 
@@ -34,6 +37,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     userLevel = await UserDataManager.getUserLevel();
     streak = await UserDataManager.getStreak();
     completedTopics = await UserDataManager.getCompletedTopicsCount();
+    userRank = await UserDataManager.getUserRank();
+    languageProgress = await UserDataManager.getLanguageProgress();
     setState(() {});
   }
 
@@ -230,7 +235,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Expanded(
                         child: _buildStatCard(
                           'Rank',
-                          '#${245 - (totalPoints ~/ 10)}',
+                          userRank > 0 ? '#$userRank' : '-',
                           Icons.leaderboard,
                           Colors.blue,
                         ),
@@ -267,16 +272,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: 30),
                   _buildSectionTitle('Progress'),
                   SizedBox(height: 15),
-                  _buildProgressCard('Python', 0.65, Colors.blue),
-                  _buildProgressCard('Java', 0.30, Colors.orange),
-                  _buildProgressCard('C Language', 0.15, Colors.purple),
-                  _buildProgressCard('HTML & CSS', 0.45, Colors.red),
+                  _buildProgressCard('Python', languageProgress['Python'] ?? 0.0, Colors.blue),
+                  _buildProgressCard('Java', languageProgress['Java'] ?? 0.0, Colors.orange),
+                  _buildProgressCard('C Language', languageProgress['C Language'] ?? 0.0, Colors.purple),
+                  _buildProgressCard('HTML & CSS', languageProgress['HTML & CSS'] ?? 0.0, Colors.red),
                   SizedBox(height: 30),
                   ElevatedButton.icon(
                     icon: Icon(Icons.logout),
                     label: Text('Logout'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                      backgroundColor: const Color.fromARGB(255, 17, 14, 14),
                       padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -286,7 +291,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.setBool('isLoggedIn', false);
                       await UserDataManager.clearAllData();
-                      Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => SplashScreen()),
+                        (route) => false,
+                      );
                     },
                   ),
                   SizedBox(height: 20),

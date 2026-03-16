@@ -4,9 +4,9 @@ import 'package:smart_coder/main.dart';
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {
     // Build the app
-    await tester.pumpWidget(CodeMastiApp());
+    await tester.pumpWidget(SmartCoderApp());
 
     // Check if Splash screen text is visible
     expect(find.text("CodeMasti 🚀"), findsOneWidget);
   });
-}
+}         

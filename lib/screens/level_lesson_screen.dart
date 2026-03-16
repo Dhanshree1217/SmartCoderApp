@@ -675,13 +675,8 @@ class _LevelLessonScreenState extends State<LevelLessonScreen> {
     final percentage = (score / questions.length * 100).toInt();
     
     if (percentage >= 60) {
-      final currentLevel = await UserDataManager.getUserLevel();
-      if (widget.level >= currentLevel) {
-        await UserDataManager.saveUserLevel(widget.level + 1);
-      }
-      
-      final totalPoints = await UserDataManager.getTotalPoints();
-      await UserDataManager.saveTotalPoints(totalPoints + (score * 10));
+      await UserDataManager.markTopicCompleted('${widget.language}_level_${widget.level}');
+      await UserDataManager.addPoints(score * 10);
     }
 
     Navigator.pushReplacement(
