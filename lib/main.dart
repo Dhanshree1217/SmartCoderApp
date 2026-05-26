@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'screens/splash_screen.dart';
-import 'screens/home_screen.dart';
-import 'auth_database.dart';
 
 void main() {
   runApp(SmartCoder());

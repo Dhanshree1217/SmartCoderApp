@@ -32,24 +32,12 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   shared_preferences: ^2.2.2
-  google_sign_in: ^6.1.5
   image_picker: ^1.0.4
-  flutter_tts: ^3.8.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  flutter_launcher_icons: ^0.14.3
-
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "lib/assets/image/app_icon.png"
-  min_sdk_android: 21
-  adaptive_icon_background: "#2D6A6A"
-  adaptive_icon_foreground: "lib/assets/image/app_icon.png"
-  remove_alpha_ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

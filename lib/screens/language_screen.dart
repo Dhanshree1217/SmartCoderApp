@@ -19,7 +19,7 @@ class LanguageScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 241, 116, 26),
+                color: Color.fromARGB(255, 30, 195, 250),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),

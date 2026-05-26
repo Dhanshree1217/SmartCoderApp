@@ -32,19 +32,19 @@ class _QuizScreenState extends State<QuizScreen> {
         ];
       case 'C':
         return [
-          {"name": "Pointers", "icon": Icons.arrow_forward},
-          {"name": "Memory", "icon": Icons.memory},
-          {"name": "Structures", "icon": Icons.account_box},
-          {"name": "File I/O", "icon": Icons.folder},
-          {"name": "Functions", "icon": Icons.functions},
+          {"name": "Hello World", "icon": Icons.play_arrow},
+          {"name": "Variables", "icon": Icons.storage},
+          {"name": "Data Types", "icon": Icons.category},
+          {"name": "Input Output", "icon": Icons.keyboard},
+          {"name": "Operators", "icon": Icons.calculate},
         ];
       case 'HTML':
         return [
-          {"name": "Tags", "icon": Icons.code},
-          {"name": "CSS Styling", "icon": Icons.palette},
+          {"name": "HTML Basics", "icon": Icons.code},
+          {"name": "Headings & Paragraphs", "icon": Icons.text_fields},
+          {"name": "Links & Images", "icon": Icons.link},
+          {"name": "Lists & Tables", "icon": Icons.list},
           {"name": "Forms", "icon": Icons.assignment},
-          {"name": "Layout", "icon": Icons.dashboard},
-          {"name": "Responsive", "icon": Icons.phone_android},
         ];
       default:
         return [
@@ -225,49 +225,49 @@ class _QuizQuestionsScreenState extends State<QuizQuestionsScreen> {
       },
       'C': {
         'Beginner': {
-          "Pointers": [
-            {"question": "What is a pointer?", "options": ["Variable storing memory address", "A function", "A loop", "An array"], "correct": 0},
-            {"question": "How do you declare a pointer?", "options": ["int *ptr", "pointer int ptr", "int ptr*", "*int ptr"], "correct": 0},
+          "Variables": [
+            {"question": "How do you declare an integer in C?", "options": ["int x = 5", "var x = 5", "integer x = 5", "x = 5"], "correct": 0},
+            {"question": "Which is a valid variable name in C?", "options": ["my_var", "123var", "my-var", "my var"], "correct": 0},
           ],
-          "Memory": [
-            {"question": "What does malloc() do?", "options": ["Allocates memory", "Frees memory", "Prints output", "Reads input"], "correct": 0},
-            {"question": "What does free() do?", "options": ["Releases memory", "Allocates memory", "Prints output", "Reads input"], "correct": 0},
+          "Data Types": [
+            {"question": "What type is 25 in C?", "options": ["int", "float", "char", "string"], "correct": 0},
+            {"question": "What type is 3.14 in C?", "options": ["float", "int", "char", "double"], "correct": 0},
           ],
-          "Structures": [
-            {"question": "What is a struct?", "options": ["User-defined data type", "A loop", "A function", "A pointer"], "correct": 0},
-            {"question": "How do you declare a struct?", "options": ["struct Name { };", "structure Name { };", "class Name { };", "type Name { };"], "correct": 0},
+          "Loops": [
+            {"question": "How do you write a for loop in C?", "options": ["for(int i=0; i<5; i++)", "for i in range(5)", "for(i=0; i<5)", "loop(5)"], "correct": 0},
+            {"question": "What does i++ do?", "options": ["Increases i by 1", "Decreases i by 1", "Multiplies i by 2", "Nothing"], "correct": 0},
           ],
-          "File I/O": [
-            {"question": "How do you open a file in C?", "options": ["fopen()", "open()", "file_open()", "read_file()"], "correct": 0},
-            {"question": "How do you close a file?", "options": ["fclose()", "close()", "file_close()", "end_file()"], "correct": 0},
+          "Arrays": [
+            {"question": "How do you declare an array in C?", "options": ["int arr[5]", "array arr[5]", "int arr(5)", "arr = [5]"], "correct": 0},
+            {"question": "How do you access first element?", "options": ["arr[0]", "arr[1]", "arr.first", "arr(0)"], "correct": 0},
           ],
           "Functions": [
-            {"question": "How do you define a function in C?", "options": ["int functionName() { }", "function int functionName()", "def functionName()", "func int functionName()"], "correct": 0},
-            {"question": "What is a function?", "options": ["Block of reusable code", "A variable", "A loop", "A struct"], "correct": 0},
+            {"question": "How do you define a function in C?", "options": ["int myFunc()", "function myFunc()", "def myFunc()", "func myFunc()"], "correct": 0},
+            {"question": "What is main() function?", "options": ["Entry point of program", "Exit point", "A variable", "A loop"], "correct": 0},
           ],
         }
       },
       'HTML': {
         'Beginner': {
-          "Tags": [
+          "Basic Tags": [
             {"question": "What does HTML stand for?", "options": ["HyperText Markup Language", "High Tech Modern Language", "Home Tool Markup Language", "Hyper Transfer Protocol"], "correct": 0},
             {"question": "Which tag creates a heading?", "options": ["<h1>", "<head>", "<header>", "<title>"], "correct": 0},
           ],
-          "CSS Styling": [
-            {"question": "What does CSS stand for?", "options": ["Cascading Style Sheets", "Computer Style Sheets", "Creative Style Sheets", "Colorful Style Sheets"], "correct": 0},
+          "Text Formatting": [
+            {"question": "How do you make text bold?", "options": ["<b>text</b>", "<bold>text</bold>", "<strong>text</strong>", "Both A and C"], "correct": 3},
+            {"question": "How do you make text italic?", "options": ["<i>text</i>", "<italic>text</italic>", "<em>text</em>", "Both A and C"], "correct": 3},
+          ],
+          "Links & Images": [
+            {"question": "How do you create a link?", "options": ["<a href='url'>text</a>", "<link>text</link>", "<url>text</url>", "<href>text</href>"], "correct": 0},
+            {"question": "How do you add an image?", "options": ["<img src='url'>", "<image src='url'>", "<pic src='url'>", "<photo src='url'>"], "correct": 0},
+          ],
+          "Lists": [
+            {"question": "How do you create an unordered list?", "options": ["<ul><li>item</li></ul>", "<ol><li>item</li></ol>", "<list>item</list>", "<items>item</items>"], "correct": 0},
+            {"question": "What does <li> stand for?", "options": ["List Item", "Line Item", "Link Item", "List Index"], "correct": 0},
+          ],
+          "Basic CSS": [
             {"question": "How do you change text color?", "options": ["color: red;", "text-color: red;", "font-color: red;", "style: red;"], "correct": 0},
-          ],
-          "Forms": [
-            {"question": "Which tag creates a form?", "options": ["<form>", "<input>", "<button>", "<field>"], "correct": 0},
-            {"question": "Which input type creates a text box?", "options": ["text", "textbox", "string", "input"], "correct": 0},
-          ],
-          "Layout": [
-            {"question": "Which tag is used for divisions?", "options": ["<div>", "<section>", "<part>", "<block>"], "correct": 0},
-            {"question": "Which tag creates a paragraph?", "options": ["<p>", "<para>", "<text>", "<paragraph>"], "correct": 0},
-          ],
-          "Responsive": [
-            {"question": "What makes a website responsive?", "options": ["Media queries", "JavaScript", "Images", "Videos"], "correct": 0},
-            {"question": "Which CSS property controls layout?", "options": ["display", "color", "font-size", "text-align"], "correct": 0},
+            {"question": "How do you change background color?", "options": ["background-color: blue;", "bg-color: blue;", "color: blue;", "background: blue;"], "correct": 0},
           ],
         }
       }
@@ -314,8 +314,12 @@ class _QuizQuestionsScreenState extends State<QuizQuestionsScreen> {
     await UserDataManager.saveQuizScore(widget.topic, score, questions.length);
     
     if (score >= questions.length * 0.6) {
-      await UserDataManager.markTopicCompleted(widget.topic);
+      await UserDataManager.markTopicCompleted('${widget.language}_${widget.topic}');
     }
+    
+    // Update daily activity and check achievements
+    await UserDataManager.updateStreak();
+    await UserDataManager.checkAndUnlockAchievements();
 
     Navigator.pushReplacement(
       context,

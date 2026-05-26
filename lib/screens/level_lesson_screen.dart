@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import '../user_data_manager.dart';
@@ -29,7 +28,6 @@ class _LevelLessonScreenState extends State<LevelLessonScreen> {
   bool isCorrect = false;
   bool isMuted = false;
   String voiceGender = "female"; // female or male
-  FlutterTts flutterTts = FlutterTts();
 
   void playClickSound() {
     SystemSound.play(SystemSoundType.click);
@@ -481,6 +479,895 @@ class _LevelLessonScreenState extends State<LevelLessonScreen> {
           "language": "All"
         },
       ],
+      // Intermediate Levels (13-24)
+      13: [
+        {
+          "question": "🐍 How to define function with parameters in Python?",
+          "options": ["def func(x, y):", "function func(x, y)", "func(x, y) {", "def func[x, y]:"],
+          "correct": 0,
+          "explanation": "def func(x, y): creates function with parameters! 🐍",
+          "language": "Python"
+        },
+        {
+          "question": "☕ How to create class in Java?",
+          "options": ["class MyClass {", "Class MyClass {", "new MyClass {", "object MyClass {"],
+          "correct": 0,
+          "explanation": "class MyClass { creates new class in Java! ☕",
+          "language": "Java"
+        },
+        {
+          "question": "💻 How to use pointers in C?",
+          "options": ["int *ptr", "int ptr*", "pointer int ptr", "int &ptr"],
+          "correct": 0,
+          "explanation": "int *ptr declares pointer in C! 💻",
+          "language": "C"
+        },
+        {
+          "question": "🌐 How to add CSS class in HTML?",
+          "options": ["class=\"myclass\"", "css=\"myclass\"", "style=\"myclass\"", "className=\"myclass\""],
+          "correct": 0,
+          "explanation": "class attribute adds CSS classes! 🌐",
+          "language": "HTML"
+        },
+        {
+          "question": "🐍 What is list comprehension in Python?",
+          "options": ["[x for x in range(5)]", "{x for x in range(5)}", "(x for x in range(5))", "<x for x in range(5)>"],
+          "correct": 0,
+          "explanation": "List comprehension creates lists efficiently! 🐍",
+          "language": "Python"
+        },
+      ],
+      14: [
+        {
+          "question": "🐍 How to create object in Python?",
+          "options": ["obj = MyClass()", "obj = new MyClass()", "obj = create MyClass()", "obj = MyClass.new()"],
+          "correct": 0,
+          "explanation": "obj = MyClass() creates object in Python! 🐍",
+          "language": "Python"
+        },
+        {
+          "question": "☕ What is inheritance in Java?",
+          "options": ["class Child extends Parent", "class Child inherits Parent", "class Child : Parent", "class Child from Parent"],
+          "correct": 0,
+          "explanation": "extends keyword creates inheritance! ☕",
+          "language": "Java"
+        },
+        {
+          "question": "💻 How to allocate memory in C?",
+          "options": ["malloc(size)", "new(size)", "alloc(size)", "memory(size)"],
+          "correct": 0,
+          "explanation": "malloc() allocates memory dynamically! 💻",
+          "language": "C"
+        },
+        {
+          "question": "🌐 How to create responsive design?",
+          "options": ["@media queries", "@responsive", "@mobile", "@screen"],
+          "correct": 0,
+          "explanation": "@media queries make responsive design! 🌐",
+          "language": "CSS"
+        },
+        {
+          "question": "🐍 What is __init__ method?",
+          "options": ["Constructor", "Destructor", "Main method", "Static method"],
+          "correct": 0,
+          "explanation": "__init__ is constructor in Python classes! 🐍",
+          "language": "Python"
+        },
+      ],
+      15: [
+        {
+          "question": "🐍 How to create nested loop in Python?",
+          "options": ["for i in range(3):\n  for j in range(3):", "for i,j in range(3,3):", "for i+j in range(6):", "nested for i,j:"],
+          "correct": 0,
+          "explanation": "Nested loops have one loop inside another! 🐍",
+          "language": "Python"
+        },
+        {
+          "question": "☕ What is nested loop output?",
+          "options": ["9 iterations total", "6 iterations total", "3 iterations total", "Error"],
+          "correct": 0,
+          "explanation": "3x3 nested loop = 9 total iterations! ☕",
+          "language": "Java"
+        },
+        {
+          "question": "💻 How to break from nested loop in C?",
+          "options": ["Use goto or flag", "break break", "exit()", "return"],
+          "correct": 0,
+          "explanation": "Use goto statement or flag variable! 💻",
+          "language": "C"
+        },
+        {
+          "question": "🌐 How to create nested HTML elements?",
+          "options": ["<div><p>text</p></div>", "<div>+<p>text</p>", "<div><p>text</div></p>", "<div,p>text</div,p>"],
+          "correct": 0,
+          "explanation": "Put elements inside other elements! 🌐",
+          "language": "HTML"
+        },
+        {
+          "question": "🐍 What prints nested loop pattern?",
+          "options": ["Stars in triangle", "Single line", "Nothing", "Error"],
+          "correct": 0,
+          "explanation": "Nested loops create patterns like triangles! 🐍",
+          "language": "Python"
+        },
+      ],
+      16: [
+        {
+          "question": "🐍 How to create 2D list in Python?",
+          "options": ["[[1,2],[3,4]]", "{[1,2],[3,4]}", "([1,2],[3,4))", "<[1,2],[3,4]>"],
+          "correct": 0,
+          "explanation": "2D list is list of lists! 🐍",
+          "language": "Python"
+        },
+        {
+          "question": "☕ How to declare 2D array in Java?",
+          "options": ["int[][] arr = new int[3][3]", "int[3][3] arr", "array[3][3] arr", "int arr[3,3]"],
+          "correct": 0,
+          "explanation": "int[][] creates 2D array in Java! ☕",
+          "language": "Java"
+        },
+        {
+          "question": "💻 How to access 2D array element in C?",
+          "options": ["arr[i][j]", "arr[i,j]", "arr(i)(j)", "arr{i}{j}"],
+          "correct": 0,
+          "explanation": "Use arr[row][col] to access elements! 💻",
+          "language": "C"
+        },
+        {
+          "question": "🌐 How to create table in HTML?",
+          "options": ["<table><tr><td>data</td></tr></table>", "<grid><row><cell>data</cell></row></grid>", "<tab><line><box>data</box></line></tab>", "<matrix><r><c>data</c></r></matrix>"],
+          "correct": 0,
+          "explanation": "<table> creates tables with rows and cells! 🌐",
+          "language": "HTML"
+        },
+        {
+          "question": "🐍 How to get matrix dimensions?",
+          "options": ["len(matrix), len(matrix[0])", "matrix.size()", "matrix.dimensions()", "size(matrix)"],
+          "correct": 0,
+          "explanation": "len() gives rows, len(matrix[0]) gives columns! 🐍",
+          "language": "Python"
+        },
+      ],
+      17: [
+        {
+          "question": "🐍 How to handle exceptions in Python?",
+          "options": ["try: except:", "catch: throw:", "handle: error:", "trap: fix:"],
+          "correct": 0,
+          "explanation": "try-except blocks handle errors! 🐍",
+          "language": "Python"
+        },
+        {
+          "question": "☕ How to catch exceptions in Java?",
+          "options": ["try { } catch(Exception e) { }", "handle { } error(Exception e) { }", "attempt { } fail(Exception e) { }", "run { } stop(Exception e) { }"],
+          "correct": 0,
+          "explanation": "try-catch blocks handle exceptions! ☕",
+          "language": "Java"
+        },
+        {
+          "question": "💻 What happens with unhandled errors in C?",
+          "options": ["Program crashes", "Program continues", "Error ignored", "Auto-fixed"],
+          "correct": 0,
+          "explanation": "C programs crash on unhandled errors! 💻",
+          "language": "C"
+        },
+        {
+          "question": "🌐 How to validate form input in HTML?",
+          "options": ["required attribute", "validate attribute", "check attribute", "must attribute"],
+          "correct": 0,
+          "explanation": "required attribute validates input! 🌐",
+          "language": "HTML"
+        },
+        {
+          "question": "🐍 What is finally block?",
+          "options": ["Always executes", "Only on error", "Only on success", "Never executes"],
+          "correct": 0,
+          "explanation": "finally block always runs! 🐍",
+          "language": "Python"
+        },
+      ],
+      18: [
+        {
+          "question": "🐍 How to read file in Python?",
+          "options": ["open('file.txt', 'r')", "read('file.txt')", "file('file.txt')", "load('file.txt')"],
+          "correct": 0,
+          "explanation": "open() function reads files! 🐍",
+          "language": "Python"
+        },
+        {
+          "question": "☕ How to write file in Java?",
+          "options": ["FileWriter", "WriteFile", "FileOutput", "SaveFile"],
+          "correct": 0,
+          "explanation": "FileWriter class writes to files! ☕",
+          "language": "Java"
+        },
+        {
+          "question": "💻 How to open file in C?",
+          "options": ["fopen(\"file.txt\", \"r\")", "open(\"file.txt\")", "file(\"file.txt\")", "read(\"file.txt\")"],
+          "correct": 0,
+          "explanation": "fopen() opens files in C! 💻",
+          "language": "C"
+        },
+        {
+          "question": "🌐 How to upload file in HTML?",
+          "options": ["<input type=\"file\">", "<upload>file</upload>", "<file>upload</file>", "<attach>file</attach>"],
+          "correct": 0,
+          "explanation": "input type=file creates upload button! 🌐",
+          "language": "HTML"
+        },
+        {
+          "question": "🐍 How to close file properly?",
+          "options": ["file.close() or with statement", "file.end()", "file.finish()", "file.stop()"],
+          "correct": 0,
+          "explanation": "Always close files or use 'with'! 🐍",
+          "language": "Python"
+        },
+      ],
+      19: [
+        {
+          "question": "🐍 What is linear search?",
+          "options": ["Check each element one by one", "Divide and search", "Random search", "Hash search"],
+          "correct": 0,
+          "explanation": "Linear search checks every element! 🐍",
+          "language": "Algorithm"
+        },
+        {
+          "question": "☕ What is binary search requirement?",
+          "options": ["Sorted array", "Unsorted array", "Large array", "Small array"],
+          "correct": 0,
+          "explanation": "Binary search needs sorted data! ☕",
+          "language": "Algorithm"
+        },
+        {
+          "question": "💻 Time complexity of linear search?",
+          "options": ["O(n)", "O(log n)", "O(1)", "O(n²)"],
+          "correct": 0,
+          "explanation": "Linear search is O(n) complexity! 💻",
+          "language": "Algorithm"
+        },
+        {
+          "question": "🌐 How to search in HTML page?",
+          "options": ["Ctrl+F", "Alt+S", "Shift+F", "Tab+S"],
+          "correct": 0,
+          "explanation": "Ctrl+F opens browser search! 🌐",
+          "language": "HTML"
+        },
+        {
+          "question": "🐍 Which is faster for large data?",
+          "options": ["Binary search", "Linear search", "Both same", "Depends on data"],
+          "correct": 0,
+          "explanation": "Binary search is much faster! 🐍",
+          "language": "Algorithm"
+        },
+      ],
+      20: [
+        {
+          "question": "🐍 What is bubble sort?",
+          "options": ["Compare adjacent elements", "Divide and sort", "Pick minimum element", "Insert in position"],
+          "correct": 0,
+          "explanation": "Bubble sort compares neighbors! 🐍",
+          "language": "Algorithm"
+        },
+        {
+          "question": "☕ Which sort is fastest?",
+          "options": ["Quick sort", "Bubble sort", "Selection sort", "Insertion sort"],
+          "correct": 0,
+          "explanation": "Quick sort is generally fastest! ☕",
+          "language": "Algorithm"
+        },
+        {
+          "question": "💻 Time complexity of bubble sort?",
+          "options": ["O(n²)", "O(n)", "O(log n)", "O(1)"],
+          "correct": 0,
+          "explanation": "Bubble sort is O(n²) complexity! 💻",
+          "language": "Algorithm"
+        },
+        {
+          "question": "🌐 How to sort HTML table?",
+          "options": ["JavaScript sorting", "CSS sorting", "HTML sorting", "Auto sorting"],
+          "correct": 0,
+          "explanation": "Use JavaScript to sort tables! 🌐",
+          "language": "JavaScript"
+        },
+        {
+          "question": "🐍 Built-in sort function?",
+          "options": ["list.sort()", "list.order()", "list.arrange()", "list.organize()"],
+          "correct": 0,
+          "explanation": "Python has built-in sort() method! 🐍",
+          "language": "Python"
+        },
+      ],
+      21: [
+        {
+          "question": "🌐 What is HTML?",
+          "options": ["Markup language", "Programming language", "Database", "Operating system"],
+          "correct": 0,
+          "explanation": "HTML is markup language for web! 🌐",
+          "language": "HTML"
+        },
+        {
+          "question": "🎨 What is CSS?",
+          "options": ["Styling language", "Programming language", "Database", "Framework"],
+          "correct": 0,
+          "explanation": "CSS styles web pages! 🎨",
+          "language": "CSS"
+        },
+        {
+          "question": "⚡ What is JavaScript?",
+          "options": ["Programming language", "Markup language", "Styling language", "Database"],
+          "correct": 0,
+          "explanation": "JavaScript adds interactivity! ⚡",
+          "language": "JavaScript"
+        },
+        {
+          "question": "🌐 How to link CSS to HTML?",
+          "options": ["<link rel=\"stylesheet\" href=\"style.css\">", "<css>style.css</css>", "<style src=\"style.css\">", "<import>style.css</import>"],
+          "correct": 0,
+          "explanation": "<link> tag connects CSS files! 🌐",
+          "language": "HTML"
+        },
+        {
+          "question": "⚡ How to add JavaScript to HTML?",
+          "options": ["<script src=\"script.js\"></script>", "<js>script.js</js>", "<javascript>script.js</javascript>", "<code>script.js</code>"],
+          "correct": 0,
+          "explanation": "<script> tag adds JavaScript! ⚡",
+          "language": "HTML"
+        },
+      ],
+      22: [
+        {
+          "question": "🗄️ What is database?",
+          "options": ["Organized data storage", "Programming language", "Web browser", "Operating system"],
+          "correct": 0,
+          "explanation": "Database stores organized data! 🗄️",
+          "language": "Database"
+        },
+        {
+          "question": "📊 What is SQL?",
+          "options": ["Database query language", "Programming language", "Web framework", "Operating system"],
+          "correct": 0,
+          "explanation": "SQL queries databases! 📊",
+          "language": "SQL"
+        },
+        {
+          "question": "🗄️ How to select all data?",
+          "options": ["SELECT * FROM table", "GET * FROM table", "FETCH * FROM table", "SHOW * FROM table"],
+          "correct": 0,
+          "explanation": "SELECT * gets all data! 🗄️",
+          "language": "SQL"
+        },
+        {
+          "question": "📊 How to insert data?",
+          "options": ["INSERT INTO table VALUES", "ADD INTO table VALUES", "PUT INTO table VALUES", "SAVE INTO table VALUES"],
+          "correct": 0,
+          "explanation": "INSERT INTO adds new data! 📊",
+          "language": "SQL"
+        },
+        {
+          "question": "🗄️ What is primary key?",
+          "options": ["Unique identifier", "Password", "Table name", "Database name"],
+          "correct": 0,
+          "explanation": "Primary key uniquely identifies records! 🗄️",
+          "language": "Database"
+        },
+      ],
+      23: [
+        {
+          "question": "🔗 What is API?",
+          "options": ["Application Programming Interface", "Advanced Programming Interface", "Automatic Programming Interface", "Applied Programming Interface"],
+          "correct": 0,
+          "explanation": "API connects different applications! 🔗",
+          "language": "API"
+        },
+        {
+          "question": "📋 What is JSON?",
+          "options": ["JavaScript Object Notation", "Java Standard Object Notation", "Just Simple Object Notation", "Joint Standard Object Notation"],
+          "correct": 0,
+          "explanation": "JSON is data exchange format! 📋",
+          "language": "JSON"
+        },
+        {
+          "question": "🔗 What is REST API?",
+          "options": ["Web service architecture", "Database type", "Programming language", "Operating system"],
+          "correct": 0,
+          "explanation": "REST is web API architecture! 🔗",
+          "language": "API"
+        },
+        {
+          "question": "📋 JSON data format?",
+          "options": ["{\"key\": \"value\"}", "<key>value</key>", "key=value", "key:value"],
+          "correct": 0,
+          "explanation": "JSON uses key-value pairs! 📋",
+          "language": "JSON"
+        },
+        {
+          "question": "🔗 HTTP method for getting data?",
+          "options": ["GET", "POST", "PUT", "DELETE"],
+          "correct": 0,
+          "explanation": "GET method retrieves data! 🔗",
+          "language": "HTTP"
+        },
+      ],
+      24: [
+        {
+          "question": "🎮 What makes a good game?",
+          "options": ["Fun gameplay", "Complex code", "Big file size", "Expensive graphics"],
+          "correct": 0,
+          "explanation": "Fun gameplay is most important! 🎮",
+          "language": "Game Dev"
+        },
+        {
+          "question": "🎯 What is game loop?",
+          "options": ["Update and render cycle", "Loading screen", "Menu system", "Save system"],
+          "correct": 0,
+          "explanation": "Game loop updates and renders continuously! 🎯",
+          "language": "Game Dev"
+        },
+        {
+          "question": "🎮 What is sprite?",
+          "options": ["2D game image", "3D model", "Sound effect", "Game level"],
+          "correct": 0,
+          "explanation": "Sprite is 2D game graphics! 🎮",
+          "language": "Game Dev"
+        },
+        {
+          "question": "🎯 What is collision detection?",
+          "options": ["Check if objects touch", "Sound system", "Graphics rendering", "Input handling"],
+          "correct": 0,
+          "explanation": "Collision detection checks object interactions! 🎯",
+          "language": "Game Dev"
+        },
+        {
+          "question": "🎮 Popular game engine?",
+          "options": ["Unity", "Photoshop", "Word", "Excel"],
+          "correct": 0,
+          "explanation": "Unity is popular game development engine! 🎮",
+          "language": "Game Dev"
+        },
+      ],
+      25: [
+        {
+          "question": "🐍 What is time complexity of binary search?",
+          "options": ["O(log n)", "O(n)", "O(n²)", "O(1)"],
+          "correct": 0,
+          "explanation": "Binary search has O(log n) complexity! 🐍",
+          "language": "Algorithm"
+        },
+        {
+          "question": "☕ What is polymorphism in Java?",
+          "options": ["Same method, different behavior", "Multiple inheritance", "Method overloading only", "Interface implementation"],
+          "correct": 0,
+          "explanation": "Polymorphism allows same interface, different implementations! ☕",
+          "language": "Java"
+        },
+        {
+          "question": "💻 What is memory leak in C?",
+          "options": ["Allocated memory not freed", "Stack overflow", "Null pointer", "Buffer overflow"],
+          "correct": 0,
+          "explanation": "Memory leak happens when malloc memory isn't freed! 💻",
+          "language": "C"
+        },
+        {
+          "question": "🌐 What is Virtual DOM?",
+          "options": ["JavaScript representation of DOM", "CSS framework", "HTML template", "Database structure"],
+          "correct": 0,
+          "explanation": "Virtual DOM is JS representation for faster updates! 🌐",
+          "language": "JavaScript"
+        },
+        {
+          "question": "🐍 What is decorator in Python?",
+          "options": ["Function that modifies another function", "Class inheritance", "Error handling", "Loop optimization"],
+          "correct": 0,
+          "explanation": "Decorators modify function behavior! 🐍",
+          "language": "Python"
+        },
+      ],
+      26: [
+        {
+          "question": "🧠 What is dynamic programming?",
+          "options": ["Optimization technique", "Programming language", "Database method", "Web framework"],
+          "correct": 0,
+          "explanation": "Dynamic programming optimizes by storing results! 🧠",
+          "language": "Algorithm"
+        },
+        {
+          "question": "⚡ What is memoization?",
+          "options": ["Caching function results", "Memory allocation", "Data compression", "File storage"],
+          "correct": 0,
+          "explanation": "Memoization caches expensive function calls! ⚡",
+          "language": "Algorithm"
+        },
+        {
+          "question": "📊 Fibonacci with DP?",
+          "options": ["Store previous results", "Calculate each time", "Use recursion only", "Use loops only"],
+          "correct": 0,
+          "explanation": "DP stores Fibonacci results to avoid recalculation! 📊",
+          "language": "Algorithm"
+        },
+        {
+          "question": "🧠 What problem does DP solve?",
+          "options": ["Overlapping subproblems", "Simple calculations", "Basic sorting", "File operations"],
+          "correct": 0,
+          "explanation": "DP solves problems with overlapping subproblems! 🧠",
+          "language": "Algorithm"
+        },
+        {
+          "question": "⚡ DP vs normal recursion?",
+          "options": ["DP is faster", "Same speed", "Recursion faster", "Both slow"],
+          "correct": 0,
+          "explanation": "DP avoids redundant calculations! ⚡",
+          "language": "Algorithm"
+        },
+      ],
+      27: [
+        {
+          "question": "🔄 What is recursion?",
+          "options": ["Function calling itself", "Loop structure", "Class inheritance", "Error handling"],
+          "correct": 0,
+          "explanation": "Recursion is when function calls itself! 🔄",
+          "language": "Algorithm"
+        },
+        {
+          "question": "🐍 Base case in recursion?",
+          "options": ["Stopping condition", "Starting point", "Error case", "Loop counter"],
+          "correct": 0,
+          "explanation": "Base case stops infinite recursion! 🐍",
+          "language": "Algorithm"
+        },
+        {
+          "question": "🔄 Factorial recursively?",
+          "options": ["n * factorial(n-1)", "n + factorial(n-1)", "n - factorial(n-1)", "n / factorial(n-1)"],
+          "correct": 0,
+          "explanation": "Factorial: n! = n * (n-1)! 🔄",
+          "language": "Algorithm"
+        },
+        {
+          "question": "🐍 Stack overflow in recursion?",
+          "options": ["Too many recursive calls", "Memory allocation error", "Syntax error", "Logic error"],
+          "correct": 0,
+          "explanation": "Too deep recursion causes stack overflow! 🐍",
+          "language": "Algorithm"
+        },
+        {
+          "question": "🔄 Tail recursion benefit?",
+          "options": ["Memory efficient", "Faster execution", "Easier to write", "Better readability"],
+          "correct": 0,
+          "explanation": "Tail recursion optimizes memory usage! 🔄",
+          "language": "Algorithm"
+        },
+      ],
+      28: [
+        {
+          "question": "🌳 What is graph?",
+          "options": ["Nodes connected by edges", "Linear data structure", "Tree structure", "Array structure"],
+          "correct": 0,
+          "explanation": "Graph has nodes (vertices) connected by edges! 🌳",
+          "language": "Data Structure"
+        },
+        {
+          "question": "🗺️ BFS vs DFS?",
+          "options": ["BFS uses queue, DFS uses stack", "BFS uses stack, DFS uses queue", "Both use queue", "Both use stack"],
+          "correct": 0,
+          "explanation": "BFS (breadth-first) uses queue, DFS (depth-first) uses stack! 🗺️",
+          "language": "Algorithm"
+        },
+        {
+          "question": "🌳 Shortest path algorithm?",
+          "options": ["Dijkstra's algorithm", "Bubble sort", "Linear search", "Binary search"],
+          "correct": 0,
+          "explanation": "Dijkstra finds shortest paths in graphs! 🌳",
+          "language": "Algorithm"
+        },
+        {
+          "question": "🗺️ What is spanning tree?",
+          "options": ["Tree connecting all nodes", "Complete graph", "Disconnected graph", "Cyclic graph"],
+          "correct": 0,
+          "explanation": "Spanning tree connects all nodes without cycles! 🗺️",
+          "language": "Data Structure"
+        },
+        {
+          "question": "🌳 Graph representation?",
+          "options": ["Adjacency matrix or list", "Array only", "Stack only", "Queue only"],
+          "correct": 0,
+          "explanation": "Graphs use adjacency matrix or adjacency list! 🌳",
+          "language": "Data Structure"
+        },
+      ],
+      29: [
+        {
+          "question": "🔐 What is encryption?",
+          "options": ["Converting data to secret code", "Data compression", "Data backup", "Data sorting"],
+          "correct": 0,
+          "explanation": "Encryption converts data to unreadable format! 🔐",
+          "language": "Security"
+        },
+        {
+          "question": "🔑 What is hash function?",
+          "options": ["One-way data transformation", "Two-way encryption", "Data compression", "Data sorting"],
+          "correct": 0,
+          "explanation": "Hash functions create fixed-size output from any input! 🔑",
+          "language": "Security"
+        },
+        {
+          "question": "🔐 RSA encryption type?",
+          "options": ["Public key cryptography", "Private key only", "No key needed", "Symmetric encryption"],
+          "correct": 0,
+          "explanation": "RSA uses public-private key pairs! 🔐",
+          "language": "Security"
+        },
+        {
+          "question": "🔑 What is digital signature?",
+          "options": ["Proof of authenticity", "Data compression", "File backup", "Password storage"],
+          "correct": 0,
+          "explanation": "Digital signatures verify data authenticity! 🔑",
+          "language": "Security"
+        },
+        {
+          "question": "🔐 Caesar cipher shift?",
+          "options": ["Letter position shift", "Random replacement", "Number addition", "Character deletion"],
+          "correct": 0,
+          "explanation": "Caesar cipher shifts letters by fixed positions! 🔐",
+          "language": "Security"
+        },
+      ],
+      30: [
+        {
+          "question": "🤖 What is machine learning?",
+          "options": ["Computers learning from data", "Manual programming", "Database management", "Web development"],
+          "correct": 0,
+          "explanation": "ML enables computers to learn patterns from data! 🤖",
+          "language": "AI"
+        },
+        {
+          "question": "📊 Supervised vs unsupervised learning?",
+          "options": ["Supervised has labeled data", "Unsupervised has labeled data", "Both same", "Neither uses data"],
+          "correct": 0,
+          "explanation": "Supervised learning uses labeled training data! 📊",
+          "language": "AI"
+        },
+        {
+          "question": "🤖 What is neural network?",
+          "options": ["Brain-inspired computing model", "Database structure", "Web framework", "File system"],
+          "correct": 0,
+          "explanation": "Neural networks mimic brain neuron connections! 🤖",
+          "language": "AI"
+        },
+        {
+          "question": "📊 Training data purpose?",
+          "options": ["Teach the model", "Test the model", "Store the model", "Delete the model"],
+          "correct": 0,
+          "explanation": "Training data teaches ML models patterns! 📊",
+          "language": "AI"
+        },
+        {
+          "question": "🤖 Overfitting in ML?",
+          "options": ["Model memorizes training data", "Model learns perfectly", "Model runs fast", "Model saves memory"],
+          "correct": 0,
+          "explanation": "Overfitting means model memorizes instead of learning! 🤖",
+          "language": "AI"
+        },
+      ],
+      31: [
+        {
+          "question": "🏗️ What is system design?",
+          "options": ["Architecture for large systems", "UI design", "Database design only", "Code optimization"],
+          "correct": 0,
+          "explanation": "System design creates architecture for scalable systems! 🏗️",
+          "language": "System Design"
+        },
+        {
+          "question": "📊 What is load balancing?",
+          "options": ["Distribute traffic across servers", "Balance database load", "Balance memory usage", "Balance CPU usage"],
+          "correct": 0,
+          "explanation": "Load balancers distribute requests across multiple servers! 📊",
+          "language": "System Design"
+        },
+        {
+          "question": "🏗️ What is microservices?",
+          "options": ["Small independent services", "Large monolithic app", "Database architecture", "UI components"],
+          "correct": 0,
+          "explanation": "Microservices break apps into small, independent services! 🏗️",
+          "language": "System Design"
+        },
+        {
+          "question": "📊 What is caching?",
+          "options": ["Store frequently used data", "Delete old data", "Compress data", "Encrypt data"],
+          "correct": 0,
+          "explanation": "Caching stores frequently accessed data for faster retrieval! 📊",
+          "language": "System Design"
+        },
+        {
+          "question": "🏗️ Database sharding?",
+          "options": ["Split database across servers", "Backup database", "Compress database", "Encrypt database"],
+          "correct": 0,
+          "explanation": "Sharding splits large databases across multiple servers! 🏗️",
+          "language": "System Design"
+        },
+      ],
+      32: [
+        {
+          "question": "⚙️ What is multithreading?",
+          "options": ["Multiple tasks simultaneously", "Single task execution", "Database operations", "File operations"],
+          "correct": 0,
+          "explanation": "Multithreading runs multiple tasks at the same time! ⚙️",
+          "language": "Concurrency"
+        },
+        {
+          "question": "🔄 What is race condition?",
+          "options": ["Threads accessing shared data", "Fast execution", "Slow execution", "Memory allocation"],
+          "correct": 0,
+          "explanation": "Race condition occurs when threads compete for shared resources! 🔄",
+          "language": "Concurrency"
+        },
+        {
+          "question": "⚙️ What is mutex?",
+          "options": ["Mutual exclusion lock", "Multiple execution", "Memory unit", "Math function"],
+          "correct": 0,
+          "explanation": "Mutex ensures only one thread accesses resource at a time! ⚙️",
+          "language": "Concurrency"
+        },
+        {
+          "question": "🔄 Deadlock in threading?",
+          "options": ["Threads waiting for each other", "Threads running fast", "Threads stopping", "Threads starting"],
+          "correct": 0,
+          "explanation": "Deadlock happens when threads wait for each other indefinitely! 🔄",
+          "language": "Concurrency"
+        },
+        {
+          "question": "⚙️ Thread vs process?",
+          "options": ["Threads share memory", "Processes share memory", "Both same", "Neither exists"],
+          "correct": 0,
+          "explanation": "Threads share memory within a process! ⚙️",
+          "language": "Concurrency"
+        },
+      ],
+      33: [
+        {
+          "question": "🔧 What is compiler?",
+          "options": ["Translates code to machine language", "Runs code directly", "Stores code", "Deletes code"],
+          "correct": 0,
+          "explanation": "Compiler converts source code to machine code! 🔧",
+          "language": "Compiler"
+        },
+        {
+          "question": "📝 Lexical analysis does?",
+          "options": ["Breaks code into tokens", "Executes code", "Optimizes code", "Stores code"],
+          "correct": 0,
+          "explanation": "Lexical analysis breaks source code into meaningful tokens! 📝",
+          "language": "Compiler"
+        },
+        {
+          "question": "🔧 What is parser?",
+          "options": ["Analyzes syntax structure", "Generates machine code", "Optimizes performance", "Manages memory"],
+          "correct": 0,
+          "explanation": "Parser analyzes the grammatical structure of code! 🔧",
+          "language": "Compiler"
+        },
+        {
+          "question": "📝 Interpreter vs compiler?",
+          "options": ["Interpreter executes line by line", "Compiler executes line by line", "Both same", "Neither executes"],
+          "correct": 0,
+          "explanation": "Interpreter executes code line by line, compiler translates first! 📝",
+          "language": "Compiler"
+        },
+        {
+          "question": "🔧 Code optimization purpose?",
+          "options": ["Make code faster/smaller", "Make code longer", "Make code complex", "Make code unreadable"],
+          "correct": 0,
+          "explanation": "Optimization makes code run faster and use less memory! 🔧",
+          "language": "Compiler"
+        },
+      ],
+      34: [
+        {
+          "question": "🌐 What is distributed system?",
+          "options": ["Multiple computers working together", "Single computer system", "Database system", "Web browser"],
+          "correct": 0,
+          "explanation": "Distributed systems use multiple computers to work as one! 🌐",
+          "language": "Distributed Systems"
+        },
+        {
+          "question": "🔗 What is consensus?",
+          "options": ["Agreement between nodes", "Data compression", "Network speed", "Memory allocation"],
+          "correct": 0,
+          "explanation": "Consensus ensures all nodes agree on system state! 🔗",
+          "language": "Distributed Systems"
+        },
+        {
+          "question": "🌐 CAP theorem?",
+          "options": ["Consistency, Availability, Partition tolerance", "CPU, Array, Pointer", "Cache, API, Protocol", "Code, Algorithm, Program"],
+          "correct": 0,
+          "explanation": "CAP theorem: can't have all three guarantees simultaneously! 🌐",
+          "language": "Distributed Systems"
+        },
+        {
+          "question": "🔗 What is replication?",
+          "options": ["Copy data across multiple nodes", "Delete old data", "Compress data", "Encrypt data"],
+          "correct": 0,
+          "explanation": "Replication copies data to multiple nodes for reliability! 🔗",
+          "language": "Distributed Systems"
+        },
+        {
+          "question": "🌐 Network partition?",
+          "options": ["Nodes can't communicate", "Fast network", "Slow network", "No network"],
+          "correct": 0,
+          "explanation": "Network partition means some nodes can't communicate! 🌐",
+          "language": "Distributed Systems"
+        },
+      ],
+      35: [
+        {
+          "question": "🛡️ What is cybersecurity?",
+          "options": ["Protecting digital systems", "Building websites", "Creating databases", "Writing code"],
+          "correct": 0,
+          "explanation": "Cybersecurity protects systems from digital attacks! 🛡️",
+          "language": "Security"
+        },
+        {
+          "question": "🔒 What is firewall?",
+          "options": ["Network security barrier", "Database tool", "Programming language", "Web browser"],
+          "correct": 0,
+          "explanation": "Firewall blocks unauthorized network access! 🔒",
+          "language": "Security"
+        },
+        {
+          "question": "🛡️ What is malware?",
+          "options": ["Malicious software", "Good software", "System software", "Web software"],
+          "correct": 0,
+          "explanation": "Malware is software designed to harm systems! 🛡️",
+          "language": "Security"
+        },
+        {
+          "question": "🔒 What is phishing?",
+          "options": ["Fake emails to steal info", "Fishing for data", "Network protocol", "Database query"],
+          "correct": 0,
+          "explanation": "Phishing uses fake communications to steal sensitive data! 🔒",
+          "language": "Security"
+        },
+        {
+          "question": "🛡️ Two-factor authentication?",
+          "options": ["Two verification steps", "Two passwords", "Two usernames", "Two computers"],
+          "correct": 0,
+          "explanation": "2FA requires two different verification methods! 🛡️",
+          "language": "Security"
+        },
+      ],
+      36: [
+        {
+          "question": "🚀 What makes a great programmer?",
+          "options": ["Problem-solving skills", "Memorizing syntax", "Fast typing", "Expensive computer"],
+          "correct": 0,
+          "explanation": "Great programmers are excellent problem solvers! 🚀",
+          "language": "Career"
+        },
+        {
+          "question": "🎆 Best way to learn programming?",
+          "options": ["Practice and build projects", "Read books only", "Watch videos only", "Memorize code"],
+          "correct": 0,
+          "explanation": "Hands-on practice and building projects is the best way! 🎆",
+          "language": "Career"
+        },
+        {
+          "question": "🚀 What is clean code?",
+          "options": ["Readable and maintainable", "Complex and clever", "Short and cryptic", "Long and detailed"],
+          "correct": 0,
+          "explanation": "Clean code is easy to read, understand, and maintain! 🚀",
+          "language": "Best Practices"
+        },
+        {
+          "question": "🎆 Version control importance?",
+          "options": ["Track changes and collaborate", "Make code faster", "Reduce file size", "Encrypt code"],
+          "correct": 0,
+          "explanation": "Version control tracks changes and enables team collaboration! 🎆",
+          "language": "Tools"
+        },
+        {
+          "question": "🚀 Congratulations! You're now a master programmer! What's next?",
+          "options": ["Keep learning and building!", "Stop coding", "Forget everything", "Give up"],
+          "correct": 0,
+          "explanation": "Programming is a lifelong journey! Keep building amazing things! 🚀🎆",
+          "language": "Motivation"
+        },
+      ],
     },
     "Python": {
       1: [
@@ -628,18 +1515,8 @@ class _LevelLessonScreenState extends State<LevelLessonScreen> {
 
   Future<void> speak(String text) async {
     if (isMuted) return;
-    
-    await flutterTts.setLanguage("en-IN"); // Indian English
-    
-    if (voiceGender == "female") {
-      await flutterTts.setPitch(1.3); // Higher pitch for female
-      await flutterTts.setSpeechRate(0.45); // Slower for clarity
-    } else {
-      await flutterTts.setPitch(0.9); // Lower pitch for male
-      await flutterTts.setSpeechRate(0.45); // Slower for clarity
-    }
-    
-    await flutterTts.speak(text);
+    // Text-to-speech functionality removed for simplicity
+    print('Would speak: $text');
   }
 
   void checkAnswer() {
@@ -677,6 +1554,12 @@ class _LevelLessonScreenState extends State<LevelLessonScreen> {
     if (percentage >= 60) {
       await UserDataManager.markTopicCompleted('${widget.language}_level_${widget.level}');
       await UserDataManager.addPoints(score * 10);
+      
+      // Unlock next level
+      int currentUserLevel = await UserDataManager.getUserLevel();
+      if (widget.level >= currentUserLevel) {
+        await UserDataManager.setUserLevel(widget.level + 1);
+      }
     }
 
     Navigator.pushReplacement(

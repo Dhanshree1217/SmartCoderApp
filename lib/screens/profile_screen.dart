@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../user_data_manager.dart';
-import 'splash_screen.dart';
+import 'login_screen.dart';
+import '../main.dart';
+import '../auth_database.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -18,8 +20,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int userLevel = 1;
   int streak = 0;
   int completedTopics = 0;
-  int userRank = 0;
-  Map<String, double> languageProgress = {};
+  String userRank = "";
+  Map<String, int> languageProgress = {};
 
   final ImagePicker _picker = ImagePicker();
 
@@ -39,17 +41,119 @@ class _ProfileScreenState extends State<ProfileScreen> {
     completedTopics = await UserDataManager.getCompletedTopicsCount();
     userRank = await UserDataManager.getUserRank();
     languageProgress = await UserDataManager.getLanguageProgress();
+    
+    // Update achievements when profile loads
+    await UserDataManager.checkAndUnlockAchievements();
+    
     setState(() {});
   }
 
   Future<void> pickImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      await UserDataManager.saveUserPhoto(image.path);
-      setState(() {
-        userPhotoPath = image.path;
-      });
-    }
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Choose Photo'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.camera_alt),
+              title: Text('Camera'),
+              onTap: () async {
+                Navigator.pop(context);
+                final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+                if (image != null) {
+                  await UserDataManager.saveUserPhoto(image.path);
+                  setState(() {
+                    userPhotoPath = image.path;
+                  });
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.photo_library),
+              title: Text('Gallery'),
+              onTap: () async {
+                Navigator.pop(context);
+                final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                if (image != null) {
+                  await UserDataManager.saveUserPhoto(image.path);
+                  setState(() {
+                    userPhotoPath = image.path;
+                  });
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.emoji_emotions),
+              title: Text('Avatar'),
+              onTap: () {
+                Navigator.pop(context);
+                _showAvatarSelection();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showAvatarSelection() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Choose Avatar'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      userPhotoPath = 'avatar1';
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.blue,
+                    child: Text('👨‍💻', style: TextStyle(fontSize: 30)),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      userPhotoPath = 'avatar2';
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.green,
+                    child: Text('👩‍💻', style: TextStyle(fontSize: 30)),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      userPhotoPath = 'avatar3';
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.purple,
+                    child: Text('🧑‍💻', style: TextStyle(fontSize: 30)),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Future<void> editProfile() async {
@@ -132,12 +236,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           CircleAvatar(
                             radius: 60,
                             backgroundColor: Colors.white,
-                            backgroundImage: userPhotoPath != null
+                            backgroundImage: userPhotoPath != null && 
+                                            userPhotoPath != 'avatar1' && 
+                                            userPhotoPath != 'avatar2' && 
+                                            userPhotoPath != 'avatar3' &&
+                                            File(userPhotoPath!).existsSync()
                                 ? FileImage(File(userPhotoPath!))
                                 : null,
-                            child: userPhotoPath == null
-                                ? Icon(Icons.person, size: 60, color: Color(0xFF2196F3))
-                                : null,
+                            child: userPhotoPath == 'avatar1'
+                                ? Text('👨💻', style: TextStyle(fontSize: 60))
+                                : userPhotoPath == 'avatar2'
+                                    ? Text('👩💻', style: TextStyle(fontSize: 60))
+                                    : userPhotoPath == 'avatar3'
+                                        ? Text('🧑💻', style: TextStyle(fontSize: 60))
+                                        : (userPhotoPath == null || !File(userPhotoPath!).existsSync())
+                                            ? Icon(Icons.person, size: 60, color: Color(0xFF2196F3))
+                                            : null,
                           ),
                           Positioned(
                             bottom: 0,
@@ -235,7 +349,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Expanded(
                         child: _buildStatCard(
                           'Rank',
-                          userRank > 0 ? '#$userRank' : '-',
+                          userRank.isNotEmpty ? userRank : '-',
                           Icons.leaderboard,
                           Colors.blue,
                         ),
@@ -269,13 +383,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     streak >= 7,
                     Icons.local_fire_department,
                   ),
+                  _buildAchievementCard(
+                    'Point Collector',
+                    'Earn 100 points',
+                    totalPoints >= 100,
+                    Icons.star,
+                  ),
+                  _buildAchievementCard(
+                    'Learning Machine',
+                    'Complete 10 topics',
+                    completedTopics >= 10,
+                    Icons.school,
+                  ),
+                  _buildAchievementCard(
+                    'Expert Level',
+                    'Reach 1000 points',
+                    totalPoints >= 1000,
+                    Icons.emoji_events,
+                  ),
+                  _buildAchievementCard(
+                    'Dedication Master',
+                    'Maintain 30 day streak',
+                    streak >= 30,
+                    Icons.calendar_today,
+                  ),
                   SizedBox(height: 30),
                   _buildSectionTitle('Progress'),
                   SizedBox(height: 15),
-                  _buildProgressCard('Python', languageProgress['Python'] ?? 0.0, Colors.blue),
-                  _buildProgressCard('Java', languageProgress['Java'] ?? 0.0, Colors.orange),
-                  _buildProgressCard('C Language', languageProgress['C Language'] ?? 0.0, Colors.purple),
-                  _buildProgressCard('HTML & CSS', languageProgress['HTML & CSS'] ?? 0.0, Colors.red),
+                  _buildProgressCard('Python', (languageProgress['Python'] ?? 0).toDouble() / 100, Colors.blue),
+                  _buildProgressCard('Java', (languageProgress['Java'] ?? 0).toDouble() / 100, Colors.orange),
+                  _buildProgressCard('C', (languageProgress['C'] ?? 0).toDouble() / 100, Colors.purple),
+                  _buildProgressCard('HTML', (languageProgress['HTML'] ?? 0).toDouble() / 100, Colors.red),
                   SizedBox(height: 30),
                   ElevatedButton.icon(
                     icon: Icon(Icons.logout),
@@ -288,11 +426,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     onPressed: () async {
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.setBool('isLoggedIn', false);
-                      await UserDataManager.clearAllData();
+                      await AuthDatabase.logout();
                       Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => SplashScreen()),
+                        SmoothPageRoute(page: LoginScreen()),
                         (route) => false,
                       );
                     },

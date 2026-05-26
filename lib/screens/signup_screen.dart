@@ -194,8 +194,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 
                 if (success) {
                   await UserDataManager.saveUserProfile(
-                    name: newNameController.text,
-                    email: newEmailController.text,
+                    newNameController.text,
+                    newEmailController.text,
                   );
                   
                   Navigator.pop(context);
@@ -255,8 +255,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         
         if (success) {
           await UserDataManager.saveUserProfile(
-            name: name,
-            email: email,
+            name,
+            email,
           );
 
           Navigator.pop(context);

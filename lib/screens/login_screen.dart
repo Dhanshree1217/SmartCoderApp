@@ -33,12 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> loadSavedCredentials() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      emailController.text = prefs.getString('savedEmail') ?? '';
-      passwordController.text = prefs.getString('savedPassword') ?? '';
-      rememberMe = prefs.getBool('rememberMe') ?? false;
-    });
+    // No auto-fill - only suggestions
   }
 
   Future<void> loginWithEmail() async {
